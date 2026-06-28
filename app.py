@@ -185,6 +185,37 @@ def class_color(label):
         "OVERLIT": YELLOW,
     }.get(label, WHITE)
 
+def lux_to_position(lux):
+    """
+    Convierte los lux a la posición del marcador sobre la barra.
+    Escala visual:
+        0 lx   -> 0%
+        5 lx   -> 25%
+        10 lx  -> 50%
+        20 lx  -> 75%
+        50 lx  -> 100%
+    """
+
+    points = [
+        (0, 0),
+        (5, 25),
+        (10, 50),
+        (20, 75),
+        (50, 100),
+    ]
+
+    if lux <= 0:
+        return 0
+
+    if lux >= 50:
+        return 100
+
+    for (x1, p1), (x2, p2) in zip(points[:-1], points[1:]):
+        if x1 <= lux <= x2:
+            return p1 + (lux - x1) * (p2 - p1) / (x2 - x1)
+
+    return 100
+
 
 # -----------------------------
 # CSS
@@ -479,6 +510,11 @@ h1,h2,h3,h4,h5,h6,p,span,label,div {{
   max-height:64px;
 }}
 
+.footer-logo.innoviris {{
+    max-height:74px;
+    max-width:280px;
+}}
+
 .fallback-logo {{
   font-size:42px;
   line-height:0.9;
@@ -614,7 +650,7 @@ if uploaded_file is not None:
             st.dataframe(df, use_container_width=True)
 
     with right_col:
-        marker_position = min(max(prediction / 50 * 100, 0), 100)
+        marker_position = lux_to_position(prediction)
 
         st.markdown(
             f'<div class="card"><div class="section-title"><span class="yellow">☼</span> Estimated Illuminance</div><div class="lux-number">{prediction:.2f} <span class="unit">lx</span></div><div class="small-label">Horizontal illuminance</div><div class="lux-scale-wrap"><div class="lux-scale-labels"><span>0</span><span>5</span><span>10</span><span>20</span><span>50+</span></div><div class="lux-scale-track"><div class="lux-scale-marker" style="left:calc({marker_position}% - 11px);"></div></div><div class="lux-scale-legend"><span style="color:{GREY};">Underlit</span><span style="color:{WHITE};">Properly lit</span><span style="color:{YELLOW};">Overlit</span></div></div></div>',
@@ -649,6 +685,6 @@ else:
 # -----------------------------
 
 st.markdown(
-    f'<div class="footer"><div class="footer-logos">{img_html(LOGO_UCLOUVAIN, "footer-logo", "UCLouvain")}{img_html(LOGO_INNOVIRIS, "footer-logo", "innoviris.brussels")}{img_html(LOGO_LAB, "footer-logo lab", "LAB Research")}</div></div>',
+    f'<div class="footer"><div class="footer-logos">{img_html(LOGO_UCLOUVAIN, "footer-logo", "UCLouvain")}{img_html(LOGO_INNOVIRIS, "footer-logo innoviris", "innoviris.brussels")}{img_html(LOGO_LAB, "footer-logo lab", "LAB Research")}</div></div>',
     unsafe_allow_html=True,
 )
