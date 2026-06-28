@@ -500,19 +500,24 @@ h1,h2,h3,h4,h5,h6,p,span,label,div {{
 }}
 
 .footer-logo {{
-  max-height:54px;
-  max-width:210px;
-  object-fit:contain;
-  display:block;
+    max-height:48px;
+    max-width:180px;
+    object-fit:contain;
+    display:block;
 }}
 
 .footer-logo.lab {{
-  max-height:64px;
+    max-height:60px;
 }}
 
 .footer-logo.innoviris {{
-    max-height:74px;
-    max-width:280px;
+    max-height:95px;
+    max-width:360px;
+}}
+
+.footer-logo.uclouvain {{
+    max-height:42px;
+    max-width:180px;
 }}
 
 .fallback-logo {{
