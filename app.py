@@ -690,6 +690,6 @@ else:
 # -----------------------------
 
 st.markdown(
-    f'<div class="footer"><div class="footer-logos">{img_html(LOGO_UCLOUVAIN, "footer-logo", "UCLouvain")}{img_html(LOGO_INNOVIRIS, "footer-logo innoviris", "innoviris.brussels")}{img_html(LOGO_LAB, "footer-logo lab", "LAB Research")}</div></div>',
+    f'<div class="footer"><div class="footer-logos">{img_html(LOGO_UCLOUVAIN, "footer-logo uclouvain", "UCLouvain")}{img_html(LOGO_INNOVIRIS, "footer-logo innoviris", "innoviris.brussels")}{img_html(LOGO_LAB, "footer-logo lab", "LAB Research")}</div></div>',
     unsafe_allow_html=True,
 )
